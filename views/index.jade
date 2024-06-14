@@ -1,0 +1,46 @@
+extends layout
+block content
+     h1 #{title}
+     br
+
+     form(action="/showTasks", method="post")
+      table.table.table-striped.table-bordered
+         tr
+           td Name
+           td County
+           td Availability
+           td Price
+           td Contact Email
+         if (typeof tasks === "undefined")
+           tr
+             td
+         else
+           each task in tasks
+             tr
+               td #{task.Name}
+               td #{task.County}
+               td #{task.Availability}
+               td #{task.Price}
+               td #{task.contactEmail}
+
+     form.well(action="/showTasks", method="post")
+      label County:
+      input(searchCounty, type="textbox")
+      button.btn.btn-primary(type="submit" onclick='querySpec = {query: "SELECT * FROM DogWalker w WHERE w.County=@County", parameters: [{name: "@County",  value: #(searchCounty)}]}') Search for Walkers near you!
+
+     hr
+     form.well(action="/addItem", method="post")
+       label Register today to become a Walker in your Local Area!
+       br
+       label Full Name:
+       input(name="Name", type="textbox")
+       label County:
+       input(name="County", type="textbox")
+       label Availability:
+       input(name="Availability", type="textbox")	   
+       label Price:
+       input(name="Price", type="textbox")	   
+       label Contact Email:
+       input(name="contactEmail", type="textbox")
+       br	   
+       button.btn.btn-primary(type="submit") Complete Registration
